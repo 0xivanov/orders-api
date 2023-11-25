@@ -12,7 +12,7 @@ func main() {
 	}
 	err := server.ListenAndServe()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("an error occured listening: ", err)
 	}
 }
 
