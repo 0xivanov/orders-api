@@ -15,10 +15,11 @@ type App struct {
 }
 
 func New() *App {
-	return &App{
-		router:  loadRoutes(),
+	app := &App{
 		redisDb: *redis.NewClient(&redis.Options{}),
 	}
+	app.loadRoutes()
+	return app
 }
 
 func (app *App) Start(kuramiqnko context.Context) error {

@@ -1,15 +1,54 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"time"
+
+	"github.com/0xivanov/orders-api/model"
+	"github.com/0xivanov/orders-api/repository"
+	"github.com/google/uuid"
 )
 
 type Order struct {
+	Repo *repository.RedisRepo
 }
 
-func (order *Order) Create(w http.ResponseWriter, r *http.Request) {
+func (o *Order) Create(w http.ResponseWriter, r *http.Request) {
+	var body struct {
+		CustomerId uuid.UUID
+		Items      []model.Item
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	order := model.Order{
+		OrderId:    rand.Uint64(),
+		CustomerId: body.CustomerId,
+		Items:      body.Items,
+		Status:     model.Processing,
+	}
+
+	err := o.Repo.Insert(r.Context(), &order)
+	if err != nil {
+		fmt.Println("failed to insert: ", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	res, err := json.Marshal(order)
+	if err != nil {
+		fmt.Println("failed to marshal: ", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(res)
+	w.WriteHeader(http.StatusCreated)
 	fmt.Println("create was called")
 }
 func (order *Order) List(w http.ResponseWriter, r *http.Request) {
