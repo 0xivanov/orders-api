@@ -15,7 +15,7 @@ func (app *App) loadRoutes() {
 	router.Use(middleware.Logger)
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("bazik ataka"))
+		w.Write([]byte("Hello world"))
 	})
 	router.Route("/orders", app.loadOrderRoutes)
 	app.router = router
