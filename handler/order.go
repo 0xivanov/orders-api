@@ -72,8 +72,8 @@ func (order *Order) List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var response struct {
-		Items []model.Order `json:orders`
-		Next  uint64        `json:nex,omitempty`
+		Items []model.Order `json:"orders"`
+		Next  uint64        `json:"nex,omitempty"`
 	}
 
 	response.Items = res

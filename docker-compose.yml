@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  orders-api:
+    build:
+      context: .
+    network_mode: "host"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
