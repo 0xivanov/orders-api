@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    tag:
+    tags:
       - '*'
 
 jobs:
