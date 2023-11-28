@@ -1,8 +1,6 @@
 package application
 
 import (
-	"net/http"
-
 	"github.com/0xivanov/orders-api/handler"
 	"github.com/0xivanov/orders-api/repository"
 	"github.com/go-chi/chi/v5"
@@ -13,10 +11,6 @@ func (app *App) loadRoutes() {
 	router := chi.NewRouter()
 
 	router.Use(middleware.Logger)
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello world"))
-	})
 	router.Route("/orders", app.loadOrderRoutes)
 	app.router = router
 }
