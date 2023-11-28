@@ -2,9 +2,10 @@ version: '3'
 
 services:
   orders-api:
-    build:
-      context: .
+    image: "vanko1/orders-api:latest"
+    container_name: orders-api
     network_mode: "host"
+    platform: linux/x86_64
     ports:
       - "3000:3000"
     depends_on:
