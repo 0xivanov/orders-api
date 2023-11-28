@@ -16,7 +16,11 @@ type App struct {
 
 func New() *App {
 	app := &App{
-		redisDb: *redis.NewClient(&redis.Options{}),
+		redisDb: *redis.NewClient(&redis.Options{
+			Addr:     "redis:6379",
+			Password: "", // no password set
+			DB:       0,  // use default DB
+		}),
 	}
 	app.loadRoutes()
 	return app
